@@ -24,7 +24,7 @@ These types of resources are supported:
 module "vector" {
   source  = "nlamirault/vector/google"
   version = "1.0.0"
-  
+
   project = var.project
 
   bucket_location      = var.bucket_location
