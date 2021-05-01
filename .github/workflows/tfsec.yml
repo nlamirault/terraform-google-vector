@@ -24,7 +24,7 @@ on:
 
 jobs:
   tfsec:
-    name: vector
+    name: gcp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
