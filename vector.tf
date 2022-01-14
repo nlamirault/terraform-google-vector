@@ -30,7 +30,9 @@ module "iam" {
   project = var.project
 
   service_accounts = [
-    module.service_account.email
+    # https://github.com/terraform-google-modules/terraform-google-cloud-storage/issues/142
+    # module.service_account.email
+    format("%s@%s.iam.gserviceaccount.com", local.service, var.project),
   ]
   mode = "authoritative"
 
@@ -54,7 +56,7 @@ module "bucket" {
   lifecycle_rules = var.lifecycle_rules
 
   encryption = var.enable_kms ? {
-    default_kms_key_name = google_kms_crypto_key.vector[0].name
+    default_kms_key_name = keys(module.kms.keys)[0]
   } : null
 
   # https://github.com/terraform-google-modules/terraform-google-cloud-storage/issues/142
@@ -73,40 +75,8 @@ module "iam_storage_buckets" {
 
   bindings = {
     "roles/storage.objectAdmin" = [
-      format("serviceAccount:%s", module.service_account.email)
+      # https://github.com/terraform-google-modules/terraform-google-cloud-storage/issues/142
+      format("serviceAccount:%s@%s.iam.gserviceaccount.com", local.service, var.project),
     ]
   }
 }
-
-# resource "google_service_account" "vector" {
-#   account_id   = local.service_name
-#   display_name = "Vector"
-#   description  = "Created by Terraform"
-# }
-
-# resource "google_storage_bucket" "vector" {
-#   name          = local.service_name
-#   location      = var.bucket_location
-#   storage_class = var.bucket_storage_class
-#   labels        = var.bucket_labels
-
-#   encryption {
-#     default_kms_key_name = google_kms_crypto_key.vector.id
-#   }
-
-#   # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
-#   # bucket attempting to utilise the crypto-key.
-#   depends_on = [google_kms_crypto_key_iam_binding.binding]
-# }
-
-# resource "google_storage_bucket_iam_member" "vector" {
-#   bucket = google_storage_bucket.vector.name
-#   role   = "roles/storage.objectAdmin"
-#   member = format("serviceAccount:%s", google_service_account.vector.email)
-# }
-
-# resource "google_service_account_iam_member" "vector" {
-#   role               = "roles/iam.workloadIdentityUser"
-#   service_account_id = google_service_account.vector.name
-#   member             = format("serviceAccount:%s.svc.id.goog[%s/%s]", var.project, var.namespace, var.service_account)
-# }
