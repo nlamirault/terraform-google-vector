@@ -54,13 +54,13 @@ keyring_location = "europe-west1"
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.0.0, < 5.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.0.0, < 5.0.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 4.0.0 |
 
 ## Modules
 
@@ -70,7 +70,7 @@ keyring_location = "europe-west1"
 | <a name="module_iam"></a> [iam](#module\_iam) | terraform-google-modules/iam/google//modules/service_accounts_iam | 7.4.0 |
 | <a name="module_iam_storage_buckets"></a> [iam\_storage\_buckets](#module\_iam\_storage\_buckets) | terraform-google-modules/iam/google//modules/storage_buckets_iam | 7.4.0 |
 | <a name="module_kms"></a> [kms](#module\_kms) | terraform-google-modules/kms/google | 2.1.0 |
-| <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.0.3 |
+| <a name="module_service_account"></a> [service\_account](#module\_service\_account) | terraform-google-modules/service-accounts/google | 4.1.0 |
 
 ## Resources
 
